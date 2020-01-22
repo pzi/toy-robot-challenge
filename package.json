@@ -1,0 +1,12 @@
+{
+  "name": "toy-robot",
+  "version": "1.0.0",
+  "description": "Toy Robot Code Challenge",
+  "main": "index.js",
+  "author": "Patrik Affentranger <patrik.affentranger@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  }
+}
