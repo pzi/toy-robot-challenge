@@ -7,5 +7,5 @@
   "endOfLine": "auto",
   "printWidth": 100,
   "semi": false,
-  "trailingComma": "none"
+  "trailingComma": "es5"
 }
