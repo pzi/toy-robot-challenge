@@ -1,12 +1,15 @@
 const { readFile } = require('fs')
+const Logger = require('js-logger')
+
+Logger.useDefaults()
 
 const DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
 const TABLE = {
   boundaries: {
     x: [0, 5],
-    y: [0, 5]
-  }
+    y: [0, 5],
+  },
 }
 Object.freeze(TABLE)
 
@@ -17,7 +20,7 @@ const ROBOT = {
   /** @property {number|null} y - the Y position */
   y: null,
   /** @property {string|null} facing - the direction the robot is facing */
-  facing: null
+  facing: null,
 }
 Object.seal(ROBOT)
 
@@ -31,7 +34,7 @@ const updateRobot = (x, y, facing) => {
   ROBOT.x = Number(x)
   ROBOT.y = Number(y)
   ROBOT.facing = facing
-  // console.log('New location:', Object.values(ROBOT).join(','))
+  // Logger.log('New location:', Object.values(ROBOT).join(','))
 }
 
 /** Reports the current location of the robot to the console.
@@ -39,9 +42,9 @@ const updateRobot = (x, y, facing) => {
  */
 const report = () => {
   if (isRobotPlaced()) {
-    console.info(Object.values(ROBOT).join(','))
+    Logger.info(Object.values(ROBOT).join(','))
   } else {
-    // console.warn('Robot has not been placed.')
+    Logger.warn('Robot has not been placed.')
   }
 }
 
@@ -61,6 +64,12 @@ const rotateRobot = direction => {
   updateRobot(ROBOT.x, ROBOT.y, newDirection)
 }
 
+/** Updates the robot properties.
+ * @param {number} x
+ * @param {number} y
+ * @param {string} facing
+ * @returns boolean
+ */
 const isValidPlacement = (x, y, facing) => {
   if (!x || !y || !facing) return false
 
@@ -90,7 +99,7 @@ const moveRobot = () => {
       newX = Math.max(Math.max(ROBOT.x - 1, minX), minX)
       break
     default:
-      console.log('Robot is facing somewhere else.')
+      Logger.warn('Robot is facing somewhere else.')
       return
   }
   updateRobot(newX, newY, ROBOT.facing)
@@ -128,7 +137,13 @@ readFile('./input_a.txt', 'utf-8', (error, data) => {
         report()
         break
       default:
-        console.warn(`Invalid command supplied: ${command}`)
+        Logger.warn(`Invalid command supplied: ${command}`)
     }
   })
 })
+
+module.exports = {
+  updateRobot,
+  report,
+  isValidPlacement,
+}
