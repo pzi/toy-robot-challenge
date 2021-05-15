@@ -105,9 +105,12 @@ const moveRobot = () => {
   updateRobot(newX, newY, ROBOT.facing)
 }
 
-readFile('./input_a.txt', 'utf-8', (error, data) => {
+const INPUT_FILE = process.argv[2] ?? './input_a.txt'
+
+readFile(INPUT_FILE, 'utf-8', (error, data) => {
   if (error) {
-    throw error
+    Logger.error(`Error reading file:\n-->`, error.message, '\n')
+    return
   }
 
   // Ensure we use consistent line endings
