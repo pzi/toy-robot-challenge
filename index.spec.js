@@ -1,14 +1,16 @@
 const { updateRobot, report, isValidPlacement } = require('./index')
 const Logger = require('js-logger')
 
+jest.mock('fs')
+
 const resetRobot = () => updateRobot(null, null, null)
 
 describe('report', () => {
   let warnSpy
   let infoSpy
   beforeEach(() => {
-    warnSpy = jest.spyOn(Logger, 'warn').mockImplementation()
-    infoSpy = jest.spyOn(Logger, 'info').mockImplementation()
+    warnSpy = jest.spyOn(Logger, 'warn').mockImplementation(undefined)
+    infoSpy = jest.spyOn(Logger, 'info').mockImplementation(undefined)
   })
 
   afterEach(() => {

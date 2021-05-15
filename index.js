@@ -48,7 +48,7 @@ const report = () => {
   }
 }
 
-/** Checkes whether the robot has been placed on the table.
+/** Checks whether the robot has been placed on the table.
  * @returns {boolean}
  */
 const isRobotPlaced = () => Object.values(ROBOT).filter(v => v === null).length === 0
@@ -64,7 +64,7 @@ const rotateRobot = direction => {
   updateRobot(ROBOT.x, ROBOT.y, newDirection)
 }
 
-/** Updates the robot properties.
+/** Checks if the robot placement is valid.
  * @param {number} x
  * @param {number} y
  * @param {string} facing
@@ -110,11 +110,16 @@ readFile('./input_a.txt', 'utf-8', (error, data) => {
     throw error
   }
 
+  // Ensure we use consistent line endings
+  const lines = data.replace(/\r\n/g,'\n').split('\n');
   // Read lines
-  const lines = data.split('\n')
   lines.forEach(line => {
+    console.log(line)
+
     const [command, location] = line.split(' ')
-    if (!command || !command.length) return
+    if (!command) {
+      return
+    }
 
     switch (command) {
       case 'PLACE':
